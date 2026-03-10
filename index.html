@@ -686,6 +686,117 @@
     .step { grid-template-columns: 1fr; }
     .challenge-card { padding: 32px 24px; }
   }
+  /* ─── DISRUPTION SECTION ─── */
+  .disruption-stats {
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .stat-block {
+    flex: 1;
+    padding: 36px 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .stat-divider { width: 1px; height: 80px; background: var(--border); flex-shrink: 0; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .why-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .why-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .why-card:hover { background: var(--surface2); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .why-card:hover::after { opacity: 1; }
+  .why-card--large {
+    grid-column: span 2;
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(200,129,58,0.07) 100%);
+    border-color: rgba(200,129,58,0.28);
+  }
+  .why-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .why-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .why-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+  .disruption-quote {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    margin-top: 48px;
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(200,129,58,0.07) 0%, rgba(122,171,114,0.05) 100%);
+    border: 1px solid rgba(200,129,58,0.2);
+    border-radius: 16px;
+  }
+  .dq-bar {
+    width: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent3));
+    flex-shrink: 0;
+  }
+  .dq-content p {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .dq-content span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 640px) {
+    .disruption-stats { flex-direction: column; }
+    .stat-divider { width: 60px; height: 1px; margin: 0 auto; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-card--large { grid-column: span 1; }
+  }
+
   /* ─── TOOL CARDS ─── */
   .tools-grid {
     display: grid;
@@ -828,6 +939,7 @@
   <div class="nav-logo">Vibe<span>Code</span></div>
   <ul class="nav-links">
     <li><a href="#what">What</a></li>
+    <li><a href="#why">Why It Matters</a></li>
     <li><a href="#tools">AI Tools</a></li>
     <li><a href="#tutorial">Tutorial</a></li>
     <li><a href="#tips">Pro Tips</a></li>
@@ -899,11 +1011,142 @@
   </div>
 </section>
 
+
+<div class="divider"></div>
+
+<!-- ─── WHY IT MATTERS ─── -->
+<section id="why">
+  <div class="section-label">02 — Why It Matters</div>
+  <h2>Why Vibe Coding is disrupting<br>software development.</h2>
+  <p class="lead">
+    This isn't a productivity hack. It's a fundamental shift in who gets to build software — and it's already making entire categories of tools obsolete.
+  </p>
+
+  <!-- Big stat banner -->
+  <div class="disruption-stats">
+    <div class="stat-block">
+      <div class="stat-num">10×</div>
+      <div class="stat-label">faster from idea<br>to working prototype</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-num">0</div>
+      <div class="stat-label">lines of code you<br>need to write yourself</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">to build and ship<br>your first tool</div>
+    </div>
+  </div>
+
+  <!-- Why blocks -->
+  <div class="why-grid">
+
+    <div class="why-card why-card--large">
+      <div class="why-icon">⚡</div>
+      <h3>The gatekeeping is gone</h3>
+      <p>For decades, building software required years of training. You either learned to code, hired someone who had, or paid for expensive licensed tools. That cost — in time, money, and dependency on others — kept most people's ideas locked in their heads. Vibe Coding removes the gate entirely. If you can describe what you want, you can build it. Today.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">🏗️</div>
+      <h3>Enterprise tools are being disrupted</h3>
+      <p>Platforms like Katalon, TestRail, and legacy test automation suites built their entire business on the idea that QA automation is hard. It required specialist engineers, expensive training, and long onboarding cycles. When a non-developer can describe a test scenario in plain English and have it running in minutes, the justification for those platforms collapses. The same disruption is hitting project management tools, BI dashboards, internal workflow builders — anything where the barrier was technical complexity.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">🧑‍💼</div>
+      <h3>Non-developers are becoming builders</h3>
+      <p>Marketers are building their own campaign dashboards. Operations managers are creating internal tools without filing IT tickets. Designers are shipping their own prototypes directly to production. The line between "person with an idea" and "person who built the thing" has collapsed. This isn't developers being replaced — it's everyone else being unlocked.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">🔁</div>
+      <h3>The feedback loop is now seconds</h3>
+      <p>Traditional development cycles: brief → spec → design → dev → QA → revisions → launch. Weeks or months. With Vibe Coding the cycle is: describe → see it → tweak → done. When iteration is free and instant, you stop planning and start experimenting. That changes how products get built at a fundamental level.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">📉</div>
+      <h3>The cost of a custom tool is approaching zero</h3>
+      <p>A custom internal tool used to cost tens of thousands of dollars and months of engineering time. Now it costs an afternoon and a Claude subscription. Small businesses, solo operators, freelancers, and community organisations can all afford bespoke software. The economic case for buying bloated SaaS platforms instead of building exactly what you need is getting harder to justify.</p>
+    </div>
+
+    <div class="why-card">
+      <div class="why-icon">🌏</div>
+      <h3>It's especially powerful in Australia</h3>
+      <p>Australia's small business economy is built on resourceful people doing more with less. We've always punched above our weight — and now Vibe Coding gives Australian SMEs, startups, and sole traders the same software-building capability that was once reserved for funded tech companies. Build for your specific market, your specific workflow, your specific clients — without a dev team.</p>
+    </div>
+
+  </div>
+
+  <!-- Pull quote -->
+  <div class="disruption-quote">
+    <div class="dq-bar"></div>
+    <div class="dq-content">
+      <p>"The next billion-dollar company might be built by someone who never wrote a single line of code — just someone who knew exactly what they wanted to build."</p>
+      <span>The Vibe Coding reality, 2025</span>
+    </div>
+  </div>
+
+  <!-- Who is being disrupted table -->
+  <div class="code-block" style="margin-top:48px;">
+    <div class="code-header">
+      <span>WHO VIBE CODING IS DISRUPTING RIGHT NOW</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="tool-table">
+        <thead>
+          <tr>
+            <th>Old way</th>
+            <th>What required it</th>
+            <th>Vibe Coded alternative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Katalon / Selenium</strong></td>
+            <td>QA automation engineers, complex setup</td>
+            <td>Describe your test in plain English → Claude writes Playwright</td>
+          </tr>
+          <tr>
+            <td><strong>Webflow / Squarespace</strong></td>
+            <td>Drag-and-drop templates, monthly fees</td>
+            <td>Describe your site → Claude builds bespoke HTML in minutes</td>
+          </tr>
+          <tr>
+            <td><strong>Tableau / Power BI</strong></td>
+            <td>Data analyst, complex configuration</td>
+            <td>Paste your CSV → Claude builds an interactive dashboard</td>
+          </tr>
+          <tr>
+            <td><strong>Zapier / Make</strong></td>
+            <td>Workflow automation with per-task pricing</td>
+            <td>Describe the automation → Claude writes the script</td>
+          </tr>
+          <tr>
+            <td><strong>Hired developer</strong></td>
+            <td>$150–$250/hr, weeks of back-and-forth</td>
+            <td>Build it yourself in an afternoon with Claude</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Any tool built on complexity</strong></td>
+            <td>The technical barrier was the product</td>
+            <td>That barrier no longer exists</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
 <div class="divider"></div>
 
 <!-- ─── AI TOOLS ─── -->
 <section id="tools">
-  <div class="section-label">02 — Your Toolkit</div>
+  <div class="section-label">03 — Your Toolkit</div>
   <h2>The best AI tools for<br>Vibe Coding.</h2>
   <p class="lead">
     You don't need just one tool — different AI products shine at different parts of the process. Here's the landscape, from chat-based builders to dedicated code IDEs.
@@ -1148,7 +1391,7 @@
 
 <!-- ─── TUTORIAL STEPS ─── -->
 <section id="tutorial">
-  <div class="section-label">03 — The Tutorial</div>
+  <div class="section-label">04 — The Tutorial</div>
   <h2>Build your first website<br>in 6 steps.</h2>
   <p class="lead">Each step teaches you a key Vibe Coding skill. Follow along in a new Claude chat as you read.</p>
 
@@ -1318,7 +1561,7 @@ document.querySelectorAll(<span class="tok-string">'.section'</span>)
 
 <!-- ─── PRO TIPS ─── -->
 <section id="tips">
-  <div class="section-label">04 — Pro Tips</div>
+  <div class="section-label">05 — Pro Tips</div>
   <h2>Vibe Coding<br>best practices.</h2>
   <p class="lead">These habits separate a frustrating Vibe Coding session from a flow-state one.</p>
 
@@ -1360,7 +1603,7 @@ document.querySelectorAll(<span class="tok-string">'.section'</span>)
 
 <!-- ─── YOUR CHECKLIST ─── -->
 <section>
-  <div class="section-label">05 — Progress</div>
+  <div class="section-label">06 — Progress</div>
   <h2>Your build checklist.</h2>
   <p class="lead">Track your progress as you work through the tutorial. Click to mark items complete.</p>
 
@@ -1428,7 +1671,7 @@ document.querySelectorAll(<span class="tok-string">'.section'</span>)
 
 <!-- ─── GROQ API ─── -->
 <section id="groq">
-  <div class="section-label">06 — Power Up</div>
+  <div class="section-label">07 — Power Up</div>
   <h2>Add AI to your website<br>with the Groq API.</h2>
   <p class="lead">
     Once your site is built, you can wire in a real AI brain. Groq offers a free API that lets your vibe-coded website talk to large language models at blazing speed — no backend required.
@@ -1577,7 +1820,7 @@ document.querySelectorAll(<span class="tok-string">'.section'</span>)
 <section id="challenge">
   <div class="challenge-card">
     <div class="challenge-num">∞</div>
-    <div class="section-label" style="justify-content:center;margin-bottom:16px;">07 — What's next</div>
+    <div class="section-label" style="justify-content:center;margin-bottom:16px;">08 — What's next</div>
     <h2>Your next challenge.</h2>
     <p class="lead">
       You've built a portfolio. Now pick one of these to push your skills further — and share what you make.
