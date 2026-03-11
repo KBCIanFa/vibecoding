@@ -267,6 +267,56 @@
   footer .logo span { color:var(--accent); }
   footer p { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--muted); }
 
+  /* REAL WORLD EXAMPLES */
+  .example-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .ex-header { display:flex; gap:18px; align-items:flex-start; padding:28px 28px 0; }
+  .ex-icon { font-size:2rem; flex-shrink:0; margin-top:2px; }
+  .ex-tag { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:7px; }
+  .ex-header h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.25rem; margin-bottom:9px; }
+  .ex-desc { font-size:0.88rem; color:var(--muted); line-height:1.7; }
+  .ex-stats { display:flex; align-items:center; margin:20px 28px; background:var(--bg); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .ex-stat { flex:1; padding:14px 16px; text-align:center; }
+  .es-n { display:block; font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; background:linear-gradient(135deg,var(--accent),var(--sand)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; margin-bottom:4px; }
+  .es-l { display:block; font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); line-height:1.4; }
+  .ex-stat-div { width:1px; height:48px; background:var(--border); flex-shrink:0; }
+  .ex-mock { margin:0 28px 20px; background:#181410; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .em-bar { display:flex; align-items:center; gap:5px; padding:8px 12px; background:var(--surface2); border-bottom:1px solid var(--border); }
+  .em-dot { width:8px; height:8px; border-radius:50%; }
+  .em-url { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted); margin-left:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .em-body { padding:14px; }
+  .em-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:7px; }
+  .em-logo { font-family:'Syne',sans-serif; font-weight:700; font-size:0.78rem; color:var(--text); }
+  .em-chip { font-family:'DM Mono',monospace; font-size:0.58rem; background:var(--surface2); border:1px solid var(--border); color:var(--muted); padding:3px 8px; border-radius:100px; white-space:nowrap; }
+  .em-chip.em-cta { background:rgba(200,129,58,0.15); border-color:rgba(200,129,58,0.3); color:var(--accent); }
+  .em-hero-block { background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:13px; margin-bottom:11px; }
+  .em-eyebrow { font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:6px; }
+  .em-h1 { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; line-height:1.2; margin-bottom:6px; }
+  .em-sub { font-size:0.7rem; color:var(--muted); line-height:1.6; }
+  .em-result-row { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .em-result-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:9px; }
+  .em-rc-label { font-family:'DM Mono',monospace; font-size:0.56rem; color:var(--muted); margin-bottom:3px; letter-spacing:0.04em; }
+  .em-rc-val { font-family:'Syne',sans-serif; font-weight:700; font-size:0.88rem; color:var(--accent); margin-bottom:2px; }
+  .em-rc-sub { font-size:0.6rem; color:var(--muted); line-height:1.4; }
+  .em-trip-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:9px; }
+  .em-trip-stat { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:8px; text-align:center; }
+  .ets-n { display:block; font-family:'Syne',sans-serif; font-weight:700; font-size:0.85rem; color:var(--accent); }
+  .ets-l { display:block; font-family:'DM Mono',monospace; font-size:0.56rem; color:var(--muted); }
+  .em-pill { font-family:'DM Mono',monospace; font-size:0.58rem; background:rgba(122,171,114,0.09); border:1px solid rgba(122,171,114,0.2); color:var(--gum); padding:3px 8px; border-radius:100px; white-space:nowrap; }
+  .em-stop { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:6px 10px; margin-bottom:4px; }
+  .ex-features { padding:0 28px; margin-bottom:18px; display:flex; flex-direction:column; gap:7px; }
+  .ex-feat { display:flex; gap:10px; font-size:0.83rem; color:var(--muted); align-items:flex-start; }
+  .ef-icon { flex-shrink:0; font-size:0.92rem; margin-top:1px; }
+  .ex-link { display:inline-block; margin:4px 28px 28px; font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(200,129,58,0.35); padding-bottom:2px; transition:all 0.2s; }
+  .ex-link:hover { border-color:var(--accent); }
+  @media(max-width:640px){
+    .ex-header { flex-direction:column; gap:10px; }
+    .ex-stats { flex-direction:column; }
+    .ex-stat-div { width:60%; height:1px; margin:0 auto; }
+    .em-result-row { grid-template-columns:repeat(2,1fr); }
+    .em-trip-row { grid-template-columns:repeat(2,1fr); }
+    .em-nav > div { display:none; }
+  }
+
   /* SCROLL REVEAL */
   .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease,transform 0.5s ease; }
   .reveal.in { opacity:1; transform:translateY(0); }
@@ -635,6 +685,154 @@
     <div class="pb-wrap"><div class="pb" id="pb"></div></div>
     <span id="pb-label">0 of 7 skills</span>
     <button class="pb-reset" onclick="resetProgress()">Reset</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REAL WORLD EXAMPLES -->
+<section id="examples">
+  <div class="sec-label">Real world proof</div>
+  <h2>Built with Vibe Coding.<br>Both of these.</h2>
+  <p class="lead">No developer. No agency. No coding background. Just a clear idea, Claude, and a few afternoons. Here's what's possible once you know the fundamentals.</p>
+
+  <!-- EXAMPLE 1: RV Power Designer -->
+  <div class="example-card reveal">
+    <div class="ex-header">
+      <div class="ex-icon">⚡</div>
+      <div>
+        <div class="ex-tag">Free web app · Single HTML file · GitHub Pages</div>
+        <h3>RV Power Designer</h3>
+        <p class="ex-desc">A professional-grade RV solar system sizing tool covering 12V, 24V and 48V systems — with ABYC-standard wire sizing, a solar generator finder, live system diagrams, and real 30-day weather simulation from Open-Meteo data.</p>
+      </div>
+    </div>
+
+    <div class="ex-stats">
+      <div class="ex-stat"><span class="es-n">150+</span><span class="es-l">appliances in the database</span></div>
+      <div class="ex-stat-div"></div>
+      <div class="ex-stat"><span class="es-n">10</span><span class="es-l">solar generator brands compared</span></div>
+      <div class="ex-stat-div"></div>
+      <div class="ex-stat"><span class="es-n">25+</span><span class="es-l">locations with seasonal sun hours</span></div>
+    </div>
+
+    <!-- Browser mockup -->
+    <div class="ex-mock">
+      <div class="em-bar">
+        <span class="em-dot" style="background:#e07060"></span>
+        <span class="em-dot" style="background:#e8c97a"></span>
+        <span class="em-dot" style="background:#7aab72"></span>
+        <span class="em-url">kbcianfa.github.io/RVPowerSystems/landing.html</span>
+      </div>
+      <div class="em-body">
+        <div class="em-nav">
+          <span class="em-logo" style="color:var(--accent);">⚡ RV Power Designer</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="em-chip">Features</span><span class="em-chip">vs Competition</span><span class="em-chip em-cta">Launch Free Tool →</span>
+          </div>
+        </div>
+        <div class="em-hero-block">
+          <div class="em-eyebrow">⚡ Free — No signup required</div>
+          <div class="em-h1">Design Your RV Power System Right.</div>
+          <div class="em-sub">The only free tool that handles 12V, 24V, and 48V systems with ABYC-standard wire sizing, a solar generator finder, and live system diagrams.</div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <span class="em-chip em-cta">⚡ Launch Free Tool</span>
+            <span class="em-chip">Read the Guide →</span>
+          </div>
+        </div>
+        <div class="em-result-row">
+          <div class="em-result-card">
+            <div class="em-rc-label">Battery Bank</div>
+            <div class="em-rc-val">240 Ah</div>
+            <div class="em-rc-sub">LiFePO4 · 24V · 80% DoD</div>
+          </div>
+          <div class="em-result-card">
+            <div class="em-rc-label">Solar Array</div>
+            <div class="em-rc-val">600 W</div>
+            <div class="em-rc-sub">3× 200W series-parallel</div>
+          </div>
+          <div class="em-result-card">
+            <div class="em-rc-label">Daily Balance</div>
+            <div class="em-rc-val" style="color:var(--gum);">+312 Wh</div>
+            <div class="em-rc-sub">Surplus after all loads</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-features">
+      <div class="ex-feat"><span class="ef-icon">📐</span><span>Live sizing engine — battery Ah, solar watts, inverter VA calculated as you type</span></div>
+      <div class="ex-feat"><span class="ef-icon">🔌</span><span>ABYC E-11 professional wire sizing for every circuit segment</span></div>
+      <div class="ex-feat"><span class="ef-icon">🌦</span><span>30-day weather simulation against real Open-Meteo historical data</span></div>
+      <div class="ex-feat"><span class="ef-icon">💾</span><span>Save, compare and share designs — no account, data stays in your browser</span></div>
+    </div>
+
+    <a href="https://kbcianfa.github.io/RVPowerSystems/landing.html" target="_blank" class="ex-link">View RV Power Designer →</a>
+  </div>
+
+  <!-- EXAMPLE 2: LogMyJourney AU -->
+  <div class="example-card reveal" style="margin-top:20px;">
+    <div class="ex-header">
+      <div class="ex-icon">🗺️</div>
+      <div>
+        <div class="ex-tag">Free web app · Offline-capable · Australian roads</div>
+        <h3>LogMyJourney AU</h3>
+        <p class="ex-desc">A pair of Australian road trip logging apps — one for petrol/diesel vehicles, one for EV/PHEV/ICE. Log fuel stops, expenses, and charging sessions. Works fully offline. No account. No tracking. Data stays on your device.</p>
+      </div>
+    </div>
+
+    <!-- Browser mockup -->
+    <div class="ex-mock">
+      <div class="em-bar">
+        <span class="em-dot" style="background:#e07060"></span>
+        <span class="em-dot" style="background:#e8c97a"></span>
+        <span class="em-dot" style="background:#7aab72"></span>
+        <span class="em-url">kbcianfa.github.io/TripLog/homepage.html</span>
+      </div>
+      <div class="em-body">
+        <div class="em-nav">
+          <span class="em-logo">🗺️ LogMyJourney AU</span>
+          <div style="display:flex;gap:6px;">
+            <span class="em-chip">⛽ Petrol & Diesel</span>
+            <span class="em-chip">⚡ EV / PHEV</span>
+          </div>
+        </div>
+        <div class="em-hero-block">
+          <div class="em-h1" style="font-size:0.95rem;">TRACK EVERY JOURNEY</div>
+          <div class="em-sub">From the outback servo to the city charger — every stop, logged.</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+            <span class="em-pill">🇦🇺 Built for Australian roads</span>
+            <span class="em-pill">📵 Works offline</span>
+            <span class="em-pill">🔒 Data stays on device</span>
+            <span class="em-pill">🆓 Free — no account</span>
+          </div>
+        </div>
+        <div class="em-trip-row">
+          <div class="em-trip-stat"><span class="ets-n">1,847</span><span class="ets-l">km</span></div>
+          <div class="em-trip-stat"><span class="ets-n">148 L</span><span class="ets-l">fuel used</span></div>
+          <div class="em-trip-stat"><span class="ets-n">8.0</span><span class="ets-l">L/100km</span></div>
+          <div class="em-trip-stat"><span class="ets-n" style="color:var(--gum);">$741</span><span class="ets-l">total spend</span></div>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="em-stop">🅿️ Mildura · 42 L · $1.89/L · 520 km · <span style="color:var(--muted);">8.1 L/100km</span></div>
+          <div class="em-stop">🅿️ Broken Hill · 38 L · $2.14/L · 453 km · <span style="color:var(--muted);">8.4 L/100km</span></div>
+          <div class="em-stop" style="border-color:rgba(122,171,114,0.3);background:rgba(122,171,114,0.05);">🅿️ Cobar · 35 L · $1.96/L · 449 km · <span style="color:var(--gum);">7.8 L/100km ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-features">
+      <div class="ex-feat"><span class="ef-icon">⛽</span><span>Fuel stops with L/100km badge per fill-up — petrol, diesel, E10, LPG and EV charging</span></div>
+      <div class="ex-feat"><span class="ef-icon">💰</span><span>Trip budget tracker with live spend by category — accommodation, food, fuel, parking</span></div>
+      <div class="ex-feat"><span class="ef-icon">⚡</span><span>Full EV & PHEV support — kWh, $/kWh, SOC%, km/kWh efficiency across charging sessions</span></div>
+      <div class="ex-feat"><span class="ef-icon">📊</span><span>Lifetime trends, CSV export, JSON backup — and dates in dd/mm/yyyy throughout</span></div>
+    </div>
+
+    <a href="https://kbcianfa.github.io/TripLog/homepage.html" target="_blank" class="ex-link">View LogMyJourney AU →</a>
+  </div>
+
+  <div class="tip" style="margin-top:28px;">
+    <span class="tip-i">💡</span>
+    <span>Both of these started as a plain English description to Claude. Neither required writing a single line of code manually. The same approach you just learned in this tutorial built fully-featured, production tools used by real people.</span>
   </div>
 </section>
 
