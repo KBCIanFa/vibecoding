@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your First Vibe Coded Website — In 45 Minutes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #1e1a14;
+    --surface: #272018;
+    --surface2:#322a1e;
+    --accent:  #c8813a;
+    --sand:    #e8c97a;
+    --gum:     #7aab72;
+    --text:    #e8dfc8;
+    --muted:   #9a8e76;
+    --border:  rgba(200,129,58,0.18);
+    --glow:    rgba(200,129,58,0.22);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; line-height:1.75; overflow-x:hidden; }
+
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.35;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:16px 40px; display:flex; align-items:center; justify-content:space-between;
+    background:rgba(28,22,14,0.9); backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(200,129,58,0.12);
+  }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; letter-spacing:-0.02em; }
+  .nav-logo span { color:var(--accent); }
+  .nav-right { display:flex; align-items:center; gap:24px; }
+  .nav-link { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .nav-link:hover { color:var(--text); }
+  .nav-link.active { color:var(--accent); }
+  .nav-deeper { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--muted); text-decoration:none; border:1px solid var(--border); padding:6px 14px; border-radius:100px; transition:all 0.2s; }
+  .nav-deeper:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* PROGRESS BAR */
+  #pgbar { position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--gum)); z-index:200; transition:width 0.1s; }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center;
+    padding:100px 24px 80px; position:relative; overflow:hidden;
+  }
+  .orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; }
+  .o1 { width:500px;height:500px; background:radial-gradient(circle,rgba(200,129,58,0.13) 0%,transparent 70%); top:-180px;left:-120px; animation:d1 14s ease-in-out infinite; }
+  .o2 { width:350px;height:350px; background:radial-gradient(circle,rgba(232,201,122,0.09) 0%,transparent 70%); bottom:-80px;right:-80px; animation:d2 11s ease-in-out infinite; }
+  .o3 { width:250px;height:250px; background:radial-gradient(circle,rgba(122,171,114,0.08) 0%,transparent 70%); top:45%;left:65%; animation:d3 16s ease-in-out infinite; }
+  @keyframes d1{0%,100%{transform:translate(0,0)}50%{transform:translate(35px,25px)}}
+  @keyframes d2{0%,100%{transform:translate(0,0)}50%{transform:translate(-25px,-18px)}}
+  @keyframes d3{0%,100%{transform:translate(0,0)}50%{transform:translate(18px,-35px)}}
+
+  .eyebrow {
+    font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--accent); border:1px solid var(--border); padding:6px 18px; border-radius:100px;
+    background:rgba(200,129,58,0.08); margin-bottom:36px; animation:up 0.8s ease both;
+  }
+  .hero h1 {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.8rem,8vw,6.5rem);
+    line-height:0.95; letter-spacing:-0.03em; animation:up 0.8s 0.1s ease both;
+  }
+  .grad { background:linear-gradient(135deg,#c8813a 0%,#e8c97a 55%,#7aab72 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero-sub {
+    max-width:520px; margin:28px auto 16px; font-size:1.1rem; color:var(--muted);
+    animation:up 0.8s 0.2s ease both;
+  }
+  .hero-meta {
+    display:flex; align-items:center; gap:10px; justify-content:center;
+    font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted); letter-spacing:0.06em;
+    margin-bottom:40px; animation:up 0.8s 0.25s ease both;
+  }
+  .hm-dot { color:var(--border); }
+  .hero-cta { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; animation:up 0.8s 0.3s ease both; }
+
+  /* OUTCOME PREVIEW */
+  .outcome {
+    margin-top:52px; display:flex; flex-direction:column; align-items:center; gap:14px;
+    animation:up 0.8s 0.45s ease both;
+  }
+  .outcome-label { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
+  .browser-mock {
+    width:100%; max-width:460px; background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  .bm-bar {
+    display:flex; align-items:center; gap:6px; padding:9px 14px;
+    background:var(--surface2); border-bottom:1px solid var(--border);
+  }
+  .bm-dot { width:9px; height:9px; border-radius:50%; }
+  .bm-url { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--muted); margin-left:8px; }
+  .bm-body { padding:16px; }
+  .bm-nav-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .bm-logo { font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; color:var(--accent); }
+  .bm-links { display:flex; gap:7px; }
+  .bm-links span { width:28px; height:5px; background:var(--surface2); border-radius:3px; }
+  .bm-hero { background:linear-gradient(135deg,var(--surface2),rgba(200,129,58,0.08)); border-radius:8px; padding:22px 18px; margin-bottom:14px; }
+  .bm-h1 { height:12px; width:65%; background:linear-gradient(90deg,var(--accent),var(--sand)); border-radius:3px; margin-bottom:8px; opacity:0.75; }
+  .bm-h2 { height:7px; width:45%; background:var(--muted); border-radius:3px; margin-bottom:14px; opacity:0.3; }
+  .bm-btn { height:22px; width:90px; background:var(--accent); border-radius:4px; opacity:0.85; }
+  .bm-cards { display:flex; gap:8px; }
+  .bm-card { flex:1; height:46px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; }
+  .outcome-facts { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+  .outcome-facts span { font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--gum); letter-spacing:0.04em; }
+
+  .scroll-hint {
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:7px;
+    color:var(--muted); font-family:'DM Mono',monospace; font-size:0.68rem; letter-spacing:0.1em;
+    animation:up 0.8s 0.7s ease both;
+  }
+  .scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,var(--accent),transparent); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+  @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+  /* BUTTONS */
+  .btn { display:inline-block; padding:13px 30px; border-radius:8px; font-family:'Syne',sans-serif; font-weight:600; font-size:0.9rem; text-decoration:none; transition:all 0.2s; }
+  .btn-primary { background:var(--accent); color:#fff; box-shadow:0 0 28px var(--glow); }
+  .btn-primary:hover { background:#d9924e; transform:translateY(-2px); box-shadow:0 0 44px var(--glow); }
+  .btn-ghost { border:1px solid var(--border); color:var(--muted); }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--text); }
+
+  /* LAYOUT */
+  .divider { max-width:760px; margin:0 auto; height:1px; background:var(--border); }
+  section { padding:88px 24px; max-width:760px; margin:0 auto; }
+  .sec-label {
+    font-family:'DM Mono',monospace; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px; display:flex; align-items:center; gap:12px;
+  }
+  .sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  h2 { font-family:'Syne',sans-serif; font-weight:700; font-size:clamp(1.9rem,4vw,2.8rem); line-height:1.1; letter-spacing:-0.02em; margin-bottom:18px; }
+  .lead { font-size:1.05rem; color:var(--muted); margin-bottom:44px; max-width:600px; line-height:1.75; }
+
+  /* BEFORE START BOX */
+  .before-box {
+    background:linear-gradient(135deg,var(--surface) 0%,rgba(200,129,58,0.06) 100%);
+    border:1px solid rgba(200,129,58,0.25); border-radius:14px; padding:28px; margin-bottom:44px;
+  }
+  .bb-head { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--border); }
+  .bb-icon { font-size:1.5rem; flex-shrink:0; margin-top:2px; }
+  .bb-head strong { display:block; font-family:'Syne',sans-serif; font-weight:600; font-size:0.95rem; margin-bottom:3px; }
+  .bb-head span { font-size:0.86rem; color:var(--muted); }
+  .bb-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; margin-bottom:16px; }
+  .bb-item { display:flex; align-items:center; gap:9px; font-size:0.84rem; color:var(--muted); }
+  .bb-tick { color:var(--gum); font-weight:700; flex-shrink:0; }
+  .bb-note { font-family:'DM Mono',monospace; font-size:0.73rem; color:var(--muted); background:rgba(0,0,0,0.2); border-radius:7px; padding:11px 15px; line-height:1.6; }
+  .bb-note a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(200,129,58,0.4); }
+
+  /* STEPS */
+  .steps { display:flex; flex-direction:column; gap:12px; }
+  .step {
+    display:grid; grid-template-columns:52px 1fr; gap:28px; align-items:start;
+    padding:36px; background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    transition:all 0.3s; position:relative; overflow:hidden;
+  }
+  .step::before {
+    content:''; position:absolute; left:0;top:0;bottom:0; width:3px;
+    background:linear-gradient(to bottom,var(--accent),transparent); opacity:0; transition:opacity 0.3s;
+  }
+  .step:hover { background:var(--surface2); border-color:rgba(200,129,58,0.32); transform:translateX(3px); }
+  .step:hover::before { opacity:1; }
+  .step-n {
+    font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--accent);
+    background:rgba(200,129,58,0.1); border:1px solid rgba(200,129,58,0.2);
+    border-radius:8px; width:42px; height:42px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-weight:500;
+  }
+  .step h3 { font-family:'Syne',sans-serif; font-weight:600; font-size:1.1rem; margin-bottom:10px; }
+  .step p { font-size:0.92rem; color:var(--muted); margin-bottom:14px; }
+  .step p:last-child { margin-bottom:0; }
+
+  /* PROMPT CARD */
+  .prompt {
+    background:linear-gradient(135deg,rgba(200,129,58,0.08) 0%,rgba(122,171,114,0.06) 100%);
+    border:1px solid rgba(200,129,58,0.28); border-radius:11px; padding:22px; margin-top:14px; position:relative;
+  }
+  .prompt::before { content:'"'; position:absolute; top:10px;left:18px; font-size:1.8rem; color:var(--accent); font-family:'Syne',sans-serif; line-height:1; opacity:0.45; }
+  .p-label { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:9px; padding-left:18px; }
+  .prompt p { font-family:'DM Mono',monospace; font-size:0.82rem; color:var(--text); padding-left:18px; line-height:1.7; }
+
+  /* TIP */
+  .tip {
+    display:flex; gap:14px; background:rgba(232,201,122,0.07); border:1px solid rgba(232,201,122,0.22);
+    border-radius:9px; padding:16px 18px; margin-top:14px; font-size:0.86rem; color:var(--muted); align-items:flex-start;
+  }
+  .tip-i { font-size:1rem; flex-shrink:0; margin-top:2px; }
+
+  /* SCREENSHOT HELPER */
+  .screenshot-steps {
+    background:var(--surface2); border:1px solid var(--border); border-radius:11px;
+    padding:20px 24px; margin-top:14px;
+  }
+  .ss-title { font-family:'Syne',sans-serif; font-weight:600; font-size:0.88rem; margin-bottom:12px; color:var(--text); }
+  .ss-list { display:flex; flex-direction:column; gap:8px; }
+  .ss-item { display:flex; gap:12px; align-items:flex-start; font-size:0.84rem; color:var(--muted); }
+  .ss-num { font-family:'DM Mono',monospace; font-size:0.68rem; background:rgba(200,129,58,0.15); color:var(--accent); border-radius:4px; padding:2px 7px; flex-shrink:0; margin-top:1px; font-weight:600; }
+
+  /* VAGUE VS SPECIFIC DEMO */
+  .tabs { display:flex; gap:4px; background:var(--bg); border-radius:9px; padding:4px; width:fit-content; margin-bottom:20px; }
+  .tab { font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.04em; padding:7px 16px; border-radius:6px; border:none; background:none; color:var(--muted); cursor:pointer; transition:all 0.2s; }
+  .tab.active { background:var(--accent); color:#fff; }
+  .tab:hover:not(.active) { color:var(--text); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* FEEDBACK DEMO */
+  .demo-box { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:16px; }
+  .demo-head { padding:18px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .demo-head h4 { font-family:'Syne',sans-serif; font-weight:600; font-size:0.92rem; }
+  .demo-badge { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; background:rgba(122,171,114,0.12); border:1px solid rgba(122,171,114,0.22); color:var(--gum); padding:3px 10px; border-radius:100px; }
+  .demo-body { padding:24px; }
+
+  /* TROUBLESHOOT */
+  .trouble-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .tc { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; transition:background 0.2s; }
+  .tc:hover { background:var(--surface2); }
+  .tc-prob { display:inline-block; font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; padding:2px 9px; border-radius:100px; margin-bottom:10px; background:rgba(220,80,60,0.1); color:#e07060; border:1px solid rgba(220,80,60,0.22); }
+  .tc h3 { font-family:'Syne',sans-serif; font-weight:600; font-size:0.92rem; margin-bottom:7px; }
+  .tc > p { font-size:0.83rem; color:var(--muted); margin-bottom:12px; line-height:1.65; }
+  .tc-fix { background:rgba(122,171,114,0.06); border:1px solid rgba(122,171,114,0.16); border-radius:7px; padding:14px; font-size:0.82rem; color:var(--muted); line-height:1.65; }
+  .tc-fix code { font-family:'DM Mono',monospace; font-size:0.76rem; color:var(--text); background:rgba(200,129,58,0.1); border-radius:3px; padding:1px 5px; }
+
+  /* CHECKLIST */
+  .checklist { display:flex; flex-direction:column; gap:10px; margin-top:28px; }
+  .ci { display:flex; gap:13px; align-items:flex-start; padding:15px 18px; background:var(--surface); border:1px solid var(--border); border-radius:9px; cursor:pointer; transition:all 0.2s; user-select:none; }
+  .ci:hover { border-color:rgba(200,129,58,0.32); }
+  .ci.done { opacity:0.65; border-color:rgba(122,171,114,0.25); background:rgba(122,171,114,0.04); }
+  .ci-box { width:19px;height:19px; border-radius:4px; border:1.5px solid var(--muted); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.65rem; transition:all 0.2s; margin-top:2px; }
+  .ci.done .ci-box { background:var(--gum); border-color:var(--gum); color:#1a1a0f; }
+  .ci strong { display:block; font-family:'Syne',sans-serif; font-weight:600; font-size:0.9rem; margin-bottom:1px; }
+  .ci span { font-size:0.8rem; color:var(--muted); }
+  .progress-row { display:flex; align-items:center; gap:14px; margin-top:20px; padding:14px 18px; background:var(--surface); border:1px solid var(--border); border-radius:9px; }
+  .pb-wrap { flex:1; height:5px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+  .pb { height:100%; background:linear-gradient(90deg,var(--accent),var(--gum)); border-radius:3px; width:0%; transition:width 0.4s ease; }
+  #pb-label { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--muted); white-space:nowrap; }
+  .pb-reset { font-family:'DM Mono',monospace; font-size:0.62rem; background:none; border:1px solid var(--border); color:var(--muted); padding:3px 9px; border-radius:4px; cursor:pointer; transition:all 0.2s; }
+  .pb-reset:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* NEXT STEPS / CTA */
+  .next-card {
+    background:linear-gradient(135deg,var(--surface) 0%,rgba(200,129,58,0.07) 100%);
+    border:1px solid rgba(200,129,58,0.3); border-radius:18px; padding:48px; text-align:center; position:relative; overflow:hidden;
+  }
+  .next-card::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(200,129,58,0.09) 0%,transparent 60%); pointer-events:none; }
+  .next-card h2 { margin-bottom:14px; }
+  .next-card p { font-size:1rem; color:var(--muted); max-width:480px; margin:0 auto 32px; }
+  .next-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:36px; text-align:left; }
+  .next-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px; }
+  .next-icon { font-size:1.4rem; margin-bottom:10px; }
+  .next-item h4 { font-family:'Syne',sans-serif; font-weight:600; font-size:0.9rem; margin-bottom:5px; }
+  .next-item p { font-size:0.8rem; color:var(--muted); line-height:1.6; margin:0; }
+  .deeper-link { display:inline-block; font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border); padding-bottom:2px; text-decoration:none; transition:all 0.2s; margin-top:16px; }
+  .deeper-link:hover { color:var(--accent); border-color:var(--accent); }
+
+  footer { max-width:760px; margin:0 auto; padding:40px 24px 72px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  footer .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:0.95rem; }
+  footer .logo span { color:var(--accent); }
+  footer p { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--muted); }
+
+  /* REAL WORLD EXAMPLES */
+  .example-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .ex-header { display:flex; gap:18px; align-items:flex-start; padding:28px 28px 0; }
+  .ex-icon { font-size:2rem; flex-shrink:0; margin-top:2px; }
+  .ex-tag { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:7px; }
+  .ex-header h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.25rem; margin-bottom:9px; }
+  .ex-desc { font-size:0.88rem; color:var(--muted); line-height:1.7; }
+  .ex-stats { display:flex; align-items:center; margin:20px 28px; background:var(--bg); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .ex-stat { flex:1; padding:14px 16px; text-align:center; }
+  .es-n { display:block; font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; background:linear-gradient(135deg,var(--accent),var(--sand)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; margin-bottom:4px; }
+  .es-l { display:block; font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--muted); line-height:1.4; }
+  .ex-stat-div { width:1px; height:48px; background:var(--border); flex-shrink:0; }
+  .ex-mock { margin:0 28px 20px; background:#181410; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .em-bar { display:flex; align-items:center; gap:5px; padding:8px 12px; background:var(--surface2); border-bottom:1px solid var(--border); }
+  .em-dot { width:8px; height:8px; border-radius:50%; }
+  .em-url { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--muted); margin-left:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .em-body { padding:14px; }
+  .em-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:7px; }
+  .em-logo { font-family:'Syne',sans-serif; font-weight:700; font-size:0.78rem; color:var(--text); }
+  .em-chip { font-family:'DM Mono',monospace; font-size:0.58rem; background:var(--surface2); border:1px solid var(--border); color:var(--muted); padding:3px 8px; border-radius:100px; white-space:nowrap; }
+  .em-chip.em-cta { background:rgba(200,129,58,0.15); border-color:rgba(200,129,58,0.3); color:var(--accent); }
+  .em-hero-block { background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:13px; margin-bottom:11px; }
+  .em-eyebrow { font-family:'DM Mono',monospace; font-size:0.58rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:6px; }
+  .em-h1 { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; line-height:1.2; margin-bottom:6px; }
+  .em-sub { font-size:0.7rem; color:var(--muted); line-height:1.6; }
+  .em-result-row { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .em-result-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:9px; }
+  .em-rc-label { font-family:'DM Mono',monospace; font-size:0.56rem; color:var(--muted); margin-bottom:3px; letter-spacing:0.04em; }
+  .em-rc-val { font-family:'Syne',sans-serif; font-weight:700; font-size:0.88rem; color:var(--accent); margin-bottom:2px; }
+  .em-rc-sub { font-size:0.6rem; color:var(--muted); line-height:1.4; }
+  .em-trip-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:9px; }
+  .em-trip-stat { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:8px; text-align:center; }
+  .ets-n { display:block; font-family:'Syne',sans-serif; font-weight:700; font-size:0.85rem; color:var(--accent); }
+  .ets-l { display:block; font-family:'DM Mono',monospace; font-size:0.56rem; color:var(--muted); }
+  .em-pill { font-family:'DM Mono',monospace; font-size:0.58rem; background:rgba(122,171,114,0.09); border:1px solid rgba(122,171,114,0.2); color:var(--gum); padding:3px 8px; border-radius:100px; white-space:nowrap; }
+  .em-stop { font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:6px 10px; margin-bottom:4px; }
+  .ex-features { padding:0 28px; margin-bottom:18px; display:flex; flex-direction:column; gap:7px; }
+  .ex-feat { display:flex; gap:10px; font-size:0.83rem; color:var(--muted); align-items:flex-start; }
+  .ef-icon { flex-shrink:0; font-size:0.92rem; margin-top:1px; }
+  .ex-link { display:inline-block; margin:4px 28px 28px; font-family:'DM Mono',monospace; font-size:0.72rem; letter-spacing:0.08em; color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(200,129,58,0.35); padding-bottom:2px; transition:all 0.2s; }
+  .ex-link:hover { border-color:var(--accent); }
+  @media(max-width:640px){
+    .ex-header { flex-direction:column; gap:10px; }
+    .ex-stats { flex-direction:column; }
+    .ex-stat-div { width:60%; height:1px; margin:0 auto; }
+    .em-result-row { grid-template-columns:repeat(2,1fr); }
+    .em-trip-row { grid-template-columns:repeat(2,1fr); }
+    .em-nav > div { display:none; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease,transform 0.5s ease; }
+  .reveal.in { opacity:1; transform:translateY(0); }
+
+  @media(max-width:640px) {
+    nav { padding:13px 18px; }
+    .nav-right { gap:12px; }
+    section { padding:64px 18px; }
+    .step { grid-template-columns:1fr; }
+    .next-card { padding:32px 22px; }
+    .trouble-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="pgbar"></div>
+
+<nav>
+  <div class="nav-logo">Vibe<span>Code</span></div>
+  <div class="nav-right">
+    <a href="#steps" class="nav-link">Tutorial</a>
+    <a href="#troubleshoot" class="nav-link">Help</a>
+    <a href="vibedeeper.html" class="nav-deeper">Go Deeper →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+
+  <div class="eyebrow">Beginner Tutorial · Free · 45 minutes</div>
+
+  <h1>
+    Build your first<br>
+    website with<br>
+    <span class="grad">pure vibes.</span>
+  </h1>
+
+  <p class="hero-sub">
+    No coding experience needed. You describe what you want. Claude writes the code. You end up with a real, live website.
+  </p>
+
+  <div class="hero-meta">
+    <span>⏱ ~45 minutes</span><span class="hm-dot">·</span>
+    <span>🔰 Total beginner</span><span class="hm-dot">·</span>
+    <span>🆓 Free tools only</span>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#steps" class="btn btn-primary">Start Building →</a>
+    <a href="vibedeeper.html" class="btn btn-ghost">Why This Matters</a>
+  </div>
+
+  <div class="outcome">
+    <div class="outcome-label">What you'll have at the end</div>
+    <div class="browser-mock">
+      <div class="bm-bar">
+        <span class="bm-dot" style="background:#e07060"></span>
+        <span class="bm-dot" style="background:#e8c97a"></span>
+        <span class="bm-dot" style="background:#7aab72"></span>
+        <span class="bm-url">yourname.netlify.app</span>
+      </div>
+      <div class="bm-body">
+        <div class="bm-nav-row">
+          <span class="bm-logo">Portfolio</span>
+          <div class="bm-links"><span></span><span></span><span></span></div>
+        </div>
+        <div class="bm-hero">
+          <div class="bm-h1"></div>
+          <div class="bm-h2"></div>
+          <div class="bm-btn"></div>
+        </div>
+        <div class="bm-cards">
+          <div class="bm-card"></div><div class="bm-card"></div><div class="bm-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="outcome-facts">
+      <span>✓ Real live URL</span>
+      <span>✓ Your design, your words</span>
+      <span>✓ Free to host forever</span>
+      <span>✓ Zero code written by you</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BEFORE YOU START -->
+<section id="before">
+  <div class="sec-label">Before you start</div>
+  <h2>What you need.</h2>
+  <p class="lead">Genuinely just these three things. Nothing to install, nothing to pay for.</p>
+
+  <div class="before-box reveal">
+    <div class="bb-head">
+      <div class="bb-icon">🧰</div>
+      <div>
+        <strong>Your complete toolkit — all free</strong>
+        <span>Get these open in your browser before you begin. Takes about 2 minutes.</span>
+      </div>
+    </div>
+    <div class="bb-items">
+      <div class="bb-item"><span class="bb-tick">✓</span> A free Claude account at claude.ai</div>
+      <div class="bb-item"><span class="bb-tick">✓</span> A text editor (even Notepad works)</div>
+      <div class="bb-item"><span class="bb-tick">✓</span> A browser (you already have one)</div>
+      <div class="bb-item"><span class="bb-tick">✓</span> 45 minutes of uninterrupted time</div>
+    </div>
+    <div class="bb-note">
+      💡 <strong>Free Claude account:</strong> Go to <a href="https://claude.ai" target="_blank">claude.ai</a> → Sign up with Google or email. The free tier is completely fine for this tutorial. You do not need Claude Pro.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TUTORIAL STEPS -->
+<section id="steps">
+  <div class="sec-label">04 — The Tutorial</div>
+  <h2>Build your site,<br>step by step.</h2>
+  <p class="lead">Follow along in Claude as you read. Each step has a prompt you can copy straight in.</p>
+
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step reveal">
+      <div class="step-n">01</div>
+      <div>
+        <h3>Open Claude and give it a brief</h3>
+        <p>Go to <strong>claude.ai</strong>, click <strong>New Chat</strong>, and paste this prompt. Replace the bits in brackets with your own details — be as specific as you like.</p>
+        <div class="prompt">
+          <div class="p-label">Copy this prompt</div>
+          <p>I want to build a personal portfolio website as a single, self-contained HTML file. I'm [your job or role] based in [your city]. My style is [describe your personality — bold, minimal, warm, quirky, etc.]. I want visitors to immediately understand who I am and what I do. Before you build anything, ask me a few questions to understand what I need.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-i">💡</span>
+          <span>Asking Claude to <em>ask you questions first</em> is the single best thing you can do. It forces Claude to understand you rather than guess — and the result will be dramatically better.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step reveal">
+      <div class="step-n">02</div>
+      <div>
+        <h3>Describe how you want it to look</h3>
+        <p>After Claude's questions, describe the visual feel. Don't worry about technical terms — just talk the way you would to a designer. Mood, colours, vibe, references.</p>
+        <div class="prompt">
+          <div class="p-label">Copy this prompt</div>
+          <p>For the visual style: I want a dark background with one strong accent colour — maybe [pick one: burnt orange / deep teal / warm gold / dusty rose]. Big typography that feels editorial and confident. Plenty of white space. Subtle animations when you scroll. Think high-end creative studio, not a generic template. Use Google Fonts — something with personality, not Arial.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-i">🎨</span>
+          <span>You can say things like "I love the feel of Stripe's website" or "something like a design portfolio from Behance." Claude understands those references and can draw from them.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step reveal">
+      <div class="step-n">03</div>
+      <div>
+        <h3>Get your first working file</h3>
+        <p>Now ask Claude to build it. Be specific: you want everything in one file, no extra setup, and you want to be able to open it directly in your browser.</p>
+        <div class="prompt">
+          <div class="p-label">Copy this prompt</div>
+          <p>Please build the homepage now as a complete, self-contained HTML file. Put all CSS and JavaScript inside the same file — no external dependencies except Google Fonts. Include: a hero section with my name and a one-line tagline, a short about section (2–3 sentences), a 3-item portfolio grid with placeholder images, and a contact section with my email address.</p>
+        </div>
+
+        <div class="screenshot-steps" style="margin-top:16px;">
+          <div class="ss-title">📂 How to open your file in a browser</div>
+          <div class="ss-list">
+            <div class="ss-item"><span class="ss-num">1</span><span>Copy all the code Claude gives you (click anywhere in the code block, then Ctrl+A to select all, Ctrl+C to copy)</span></div>
+            <div class="ss-item"><span class="ss-num">2</span><span>Open Notepad (Windows) or TextEdit (Mac). Paste the code.</span></div>
+            <div class="ss-item"><span class="ss-num">3</span><span>Save the file as <strong>index.html</strong> — make sure the file extension is .html, not .txt</span></div>
+            <div class="ss-item"><span class="ss-num">4</span><span>Find the file on your computer and double-click it. It will open in your browser.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step reveal">
+      <div class="step-n">04</div>
+      <div>
+        <h3>Look at it honestly and give feedback</h3>
+        <p>Open your file. Look at it. What do you love? What feels off? Now go back to Claude and tell it — but be specific. Vague feedback gets vague results.</p>
+
+        <div class="demo-box">
+          <div class="demo-head">
+            <h4>Vague vs specific feedback — see the difference</h4>
+            <span class="demo-badge">Interactive</span>
+          </div>
+          <div class="demo-body">
+            <div class="tabs">
+              <button class="tab active" onclick="switchTab(this,'vague')">Vague ✗</button>
+              <button class="tab" onclick="switchTab(this,'specific')">Specific ✓</button>
+            </div>
+            <div class="tab-panel active" id="tp-vague">
+              <div class="prompt" style="margin-top:0;">
+                <div class="p-label">Don't say this</div>
+                <p>Make it look better. The colours feel off and it doesn't really match my vibe.</p>
+              </div>
+              <div class="tip" style="border-color:rgba(220,80,60,0.2);background:rgba(220,80,60,0.05);">
+                <span class="tip-i">✗</span>
+                <span>"Better" and "vibe" mean nothing to Claude. It will guess — usually wrong. You'll go back and forth forever.</span>
+              </div>
+            </div>
+            <div class="tab-panel" id="tp-specific">
+              <div class="prompt" style="margin-top:0;">
+                <div class="p-label">Say this instead</div>
+                <p>The hero section looks great — keep that exactly. But the portfolio grid feels too cramped. Increase the gap between cards to 40px and add a soft shadow to each card. Also the font in the About section is too small — bump it to 18px minimum. Keep everything else identical.</p>
+              </div>
+              <div class="tip" style="border-color:rgba(122,171,114,0.25);background:rgba(122,171,114,0.05);">
+                <span class="tip-i">✓</span>
+                <span>Name the element. State the exact change. Say what to preserve. Claude nails it first time.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step reveal">
+      <div class="step-n">05</div>
+      <div>
+        <h3>Add animations and polish</h3>
+        <p>Once the layout feels right, ask Claude to bring the page to life. Effects that would take a developer hours come in seconds with a single prompt.</p>
+        <div class="prompt">
+          <div class="p-label">Copy this prompt</div>
+          <p>Now add some life to the page: 1) Fade-in animations for each section as the user scrolls — use the Intersection Observer API. 2) On the portfolio cards, a smooth colour overlay on hover that reveals a "View Project" label. 3) A subtle parallax drift on the hero background. Keep everything tasteful — nothing jarring or distracting.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-i">💡</span>
+          <span>After Claude writes something you didn't understand, ask: <em>"Explain what the Intersection Observer part does in plain English."</em> You'll learn real concepts without trying to.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step reveal">
+      <div class="step-n">06</div>
+      <div>
+        <h3>Make it real and publish it</h3>
+        <p>Replace the placeholder content with your actual details, then put it on the internet. It takes about 30 seconds with Netlify Drop — no account needed.</p>
+        <div class="prompt">
+          <div class="p-label">Copy this prompt</div>
+          <p>Here's my real content to replace all the placeholders: [paste your name, job title, bio, 3 project names and descriptions, email address]. Also please add proper meta tags for SEO and social sharing (og:title, og:description, og:image). Finally, add a small "Built with Claude" credit in the footer.</p>
+        </div>
+
+        <div class="screenshot-steps" style="margin-top:16px;">
+          <div class="ss-title">🚀 How to publish your site for free</div>
+          <div class="ss-list">
+            <div class="ss-item"><span class="ss-num">1</span><span>Go to <strong>app.netlify.com/drop</strong> in a new browser tab</span></div>
+            <div class="ss-item"><span class="ss-num">2</span><span>Find your <strong>index.html</strong> file on your computer</span></div>
+            <div class="ss-item"><span class="ss-num">3</span><span>Drag it directly onto the Netlify Drop page</span></div>
+            <div class="ss-item"><span class="ss-num">4</span><span>In about 10 seconds you'll get a live URL. Copy it. Send it to someone.</span></div>
+          </div>
+        </div>
+
+        <div class="tip" style="margin-top:14px;border-color:rgba(122,171,114,0.25);background:rgba(122,171,114,0.06);">
+          <span class="tip-i">🎉</span>
+          <span>That's it. You just vibe coded a real website. No developer. No templates. No code knowledge. Just you, describing what you wanted, and Claude building it.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TROUBLESHOOTING -->
+<section id="troubleshoot">
+  <div class="sec-label">When things go wrong</div>
+  <h2>Claude got it wrong.<br>Here's the fix.</h2>
+  <p class="lead">Every Vibe Coder hits these. They're not failures — they're part of the process. Here's exactly what to say.</p>
+
+  <div class="trouble-grid">
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>Claude changed things I didn't ask it to</h3>
+      <p>You asked to fix the footer and Claude redesigned half the page.</p>
+      <div class="tc-fix">End every prompt with: <code>Keep everything else exactly as it is.</code> If it still happens, paste the whole current file back and say <code>only change X, nothing else</code>.</div>
+    </div>
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>The page is blank or looks broken</h3>
+      <p>You saved the file and opened it but nothing renders properly.</p>
+      <div class="tc-fix">Go back to Claude and say: <code>The page is blank in my browser. Please check for any unclosed tags or missing code and give me the complete corrected file.</code></div>
+    </div>
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>Claude keeps misunderstanding me</h3>
+      <p>You've asked three times and it's still not right.</p>
+      <div class="tc-fix">Stop describing what you want. Describe what you <em>don't</em> want: <code>I do NOT want X. I do NOT want Y. I just want Z — simply and nothing else.</code></div>
+    </div>
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>The conversation is getting confused</h3>
+      <p>Claude is forgetting earlier decisions and contradicting itself.</p>
+      <div class="tc-fix">Start a fresh chat. Paste your current HTML and open with: <code>Here is my current site. This is our starting point. Continue building on this exact code.</code></div>
+    </div>
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>It looks great on desktop but broken on mobile</h3>
+      <p>The layout falls apart on a phone screen.</p>
+      <div class="tc-fix">Ask: <code>Please audit every section for mobile at 375px width and fix any issues. Keep the desktop layout completely unchanged.</code></div>
+    </div>
+    <div class="tc reveal">
+      <span class="tc-prob">Problem</span>
+      <h3>I lost the version I preferred</h3>
+      <p>Claude rewrote something and you liked the old version better.</p>
+      <div class="tc-fix">Before any big change, save a copy: <em>v1.html, v2.html</em>. Two seconds of saving. Hours of grief avoided. Do it every time.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="sec-label">Track your progress</div>
+  <h2>Skills you're building.</h2>
+  <p class="lead">Tick each one as it clicks. Your progress is saved — come back anytime.</p>
+
+  <div class="checklist">
+    <div class="ci reveal" data-id="s1" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Writing an effective brief</strong><span>Context + personality + goal = great output from Claude</span></div>
+    </div>
+    <div class="ci reveal" data-id="s2" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Describing a visual style in plain English</strong><span>Mood, references, adjectives — no technical knowledge needed</span></div>
+    </div>
+    <div class="ci reveal" data-id="s3" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Saving and opening an HTML file</strong><span>Paste → save as .html → double-click → it opens in your browser</span></div>
+    </div>
+    <div class="ci reveal" data-id="s4" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Giving specific, actionable feedback</strong><span>Name the element. State the change. Say what to keep.</span></div>
+    </div>
+    <div class="ci reveal" data-id="s5" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Adding animations via prompt</strong><span>You described motion in words — Claude translated it to code</span></div>
+    </div>
+    <div class="ci reveal" data-id="s6" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Recovering when things go wrong</strong><span>Paste current code + describe the problem specifically</span></div>
+    </div>
+    <div class="ci reveal" data-id="s7" onclick="tick(this)">
+      <div class="ci-box">✓</div>
+      <div><strong>Published a real website 🎉</strong><span>A live URL you can send to anyone in the world</span></div>
+    </div>
+  </div>
+
+  <div class="progress-row">
+    <div class="pb-wrap"><div class="pb" id="pb"></div></div>
+    <span id="pb-label">0 of 7 skills</span>
+    <button class="pb-reset" onclick="resetProgress()">Reset</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REAL WORLD EXAMPLES -->
+<section id="examples">
+  <div class="sec-label">Real world proof</div>
+  <h2>Built with Vibe Coding.<br>Both of these.</h2>
+  <p class="lead">No developer. No agency. No coding background. Just a clear idea, Claude, and a few afternoons. Here's what's possible once you know the fundamentals.</p>
+
+  <!-- EXAMPLE 1: RV Power Designer -->
+  <div class="example-card reveal">
+    <div class="ex-header">
+      <div class="ex-icon">⚡</div>
+      <div>
+        <div class="ex-tag">Free web app · Single HTML file · GitHub Pages</div>
+        <h3>RV Power Designer</h3>
+        <p class="ex-desc">A professional-grade RV solar system sizing tool covering 12V, 24V and 48V systems — with ABYC-standard wire sizing, a solar generator finder, live system diagrams, and real 30-day weather simulation from Open-Meteo data.</p>
+      </div>
+    </div>
+
+    <div class="ex-stats">
+      <div class="ex-stat"><span class="es-n">150+</span><span class="es-l">appliances in the database</span></div>
+      <div class="ex-stat-div"></div>
+      <div class="ex-stat"><span class="es-n">10</span><span class="es-l">solar generator brands compared</span></div>
+      <div class="ex-stat-div"></div>
+      <div class="ex-stat"><span class="es-n">25+</span><span class="es-l">locations with seasonal sun hours</span></div>
+    </div>
+
+    <!-- Browser mockup -->
+    <div class="ex-mock">
+      <div class="em-bar">
+        <span class="em-dot" style="background:#e07060"></span>
+        <span class="em-dot" style="background:#e8c97a"></span>
+        <span class="em-dot" style="background:#7aab72"></span>
+        <span class="em-url">kbcianfa.github.io/RVPowerSystems/landing.html</span>
+      </div>
+      <div class="em-body">
+        <div class="em-nav">
+          <span class="em-logo" style="color:var(--accent);">⚡ RV Power Designer</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="em-chip">Features</span><span class="em-chip">vs Competition</span><span class="em-chip em-cta">Launch Free Tool →</span>
+          </div>
+        </div>
+        <div class="em-hero-block">
+          <div class="em-eyebrow">⚡ Free — No signup required</div>
+          <div class="em-h1">Design Your RV Power System Right.</div>
+          <div class="em-sub">The only free tool that handles 12V, 24V, and 48V systems with ABYC-standard wire sizing, a solar generator finder, and live system diagrams.</div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <span class="em-chip em-cta">⚡ Launch Free Tool</span>
+            <span class="em-chip">Read the Guide →</span>
+          </div>
+        </div>
+        <div class="em-result-row">
+          <div class="em-result-card">
+            <div class="em-rc-label">Battery Bank</div>
+            <div class="em-rc-val">240 Ah</div>
+            <div class="em-rc-sub">LiFePO4 · 24V · 80% DoD</div>
+          </div>
+          <div class="em-result-card">
+            <div class="em-rc-label">Solar Array</div>
+            <div class="em-rc-val">600 W</div>
+            <div class="em-rc-sub">3× 200W series-parallel</div>
+          </div>
+          <div class="em-result-card">
+            <div class="em-rc-label">Daily Balance</div>
+            <div class="em-rc-val" style="color:var(--gum);">+312 Wh</div>
+            <div class="em-rc-sub">Surplus after all loads</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-features">
+      <div class="ex-feat"><span class="ef-icon">📐</span><span>Live sizing engine — battery Ah, solar watts, inverter VA calculated as you type</span></div>
+      <div class="ex-feat"><span class="ef-icon">🔌</span><span>ABYC E-11 professional wire sizing for every circuit segment</span></div>
+      <div class="ex-feat"><span class="ef-icon">🌦</span><span>30-day weather simulation against real Open-Meteo historical data</span></div>
+      <div class="ex-feat"><span class="ef-icon">💾</span><span>Save, compare and share designs — no account, data stays in your browser</span></div>
+    </div>
+
+    <a href="https://kbcianfa.github.io/RVPowerSystems/landing.html" target="_blank" class="ex-link">View RV Power Designer →</a>
+  </div>
+
+  <!-- EXAMPLE 2: LogMyJourney AU -->
+  <div class="example-card reveal" style="margin-top:20px;">
+    <div class="ex-header">
+      <div class="ex-icon">🗺️</div>
+      <div>
+        <div class="ex-tag">Free web app · Offline-capable · Australian roads</div>
+        <h3>LogMyJourney AU</h3>
+        <p class="ex-desc">A pair of Australian road trip logging apps — one for petrol/diesel vehicles, one for EV/PHEV/ICE. Log fuel stops, expenses, and charging sessions. Works fully offline. No account. No tracking. Data stays on your device.</p>
+      </div>
+    </div>
+
+    <!-- Browser mockup -->
+    <div class="ex-mock">
+      <div class="em-bar">
+        <span class="em-dot" style="background:#e07060"></span>
+        <span class="em-dot" style="background:#e8c97a"></span>
+        <span class="em-dot" style="background:#7aab72"></span>
+        <span class="em-url">kbcianfa.github.io/TripLog/homepage.html</span>
+      </div>
+      <div class="em-body">
+        <div class="em-nav">
+          <span class="em-logo">🗺️ LogMyJourney AU</span>
+          <div style="display:flex;gap:6px;">
+            <span class="em-chip">⛽ Petrol & Diesel</span>
+            <span class="em-chip">⚡ EV / PHEV</span>
+          </div>
+        </div>
+        <div class="em-hero-block">
+          <div class="em-h1" style="font-size:0.95rem;">TRACK EVERY JOURNEY</div>
+          <div class="em-sub">From the outback servo to the city charger — every stop, logged.</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+            <span class="em-pill">🇦🇺 Built for Australian roads</span>
+            <span class="em-pill">📵 Works offline</span>
+            <span class="em-pill">🔒 Data stays on device</span>
+            <span class="em-pill">🆓 Free — no account</span>
+          </div>
+        </div>
+        <div class="em-trip-row">
+          <div class="em-trip-stat"><span class="ets-n">1,847</span><span class="ets-l">km</span></div>
+          <div class="em-trip-stat"><span class="ets-n">148 L</span><span class="ets-l">fuel used</span></div>
+          <div class="em-trip-stat"><span class="ets-n">8.0</span><span class="ets-l">L/100km</span></div>
+          <div class="em-trip-stat"><span class="ets-n" style="color:var(--gum);">$741</span><span class="ets-l">total spend</span></div>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="em-stop">🅿️ Mildura · 42 L · $1.89/L · 520 km · <span style="color:var(--muted);">8.1 L/100km</span></div>
+          <div class="em-stop">🅿️ Broken Hill · 38 L · $2.14/L · 453 km · <span style="color:var(--muted);">8.4 L/100km</span></div>
+          <div class="em-stop" style="border-color:rgba(122,171,114,0.3);background:rgba(122,171,114,0.05);">🅿️ Cobar · 35 L · $1.96/L · 449 km · <span style="color:var(--gum);">7.8 L/100km ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-features">
+      <div class="ex-feat"><span class="ef-icon">⛽</span><span>Fuel stops with L/100km badge per fill-up — petrol, diesel, E10, LPG and EV charging</span></div>
+      <div class="ex-feat"><span class="ef-icon">💰</span><span>Trip budget tracker with live spend by category — accommodation, food, fuel, parking</span></div>
+      <div class="ex-feat"><span class="ef-icon">⚡</span><span>Full EV & PHEV support — kWh, $/kWh, SOC%, km/kWh efficiency across charging sessions</span></div>
+      <div class="ex-feat"><span class="ef-icon">📊</span><span>Lifetime trends, CSV export, JSON backup — and dates in dd/mm/yyyy throughout</span></div>
+    </div>
+
+    <a href="https://kbcianfa.github.io/TripLog/homepage.html" target="_blank" class="ex-link">View LogMyJourney AU →</a>
+  </div>
+
+  <div class="tip" style="margin-top:28px;">
+    <span class="tip-i">💡</span>
+    <span>Both of these started as a plain English description to Claude. Neither required writing a single line of code manually. The same approach you just learned in this tutorial built fully-featured, production tools used by real people.</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NEXT STEPS -->
+<section id="next">
+  <div class="next-card">
+    <div class="sec-label" style="justify-content:center;margin-bottom:14px;">You did it. What's next?</div>
+    <h2>Keep building.</h2>
+    <p>Now that you know the fundamentals, try one of these to push further.</p>
+
+    <div class="next-grid">
+      <div class="next-item">
+        <div class="next-icon">🛒</div>
+        <h4>Fake product page</h4>
+        <p>Invent a product and build a landing page. Practice hero sections and pricing tables.</p>
+      </div>
+      <div class="next-item">
+        <div class="next-icon">📰</div>
+        <h4>Personal blog</h4>
+        <p>A homepage with article cards and a full reading layout. Practice typography and structure.</p>
+      </div>
+      <div class="next-item">
+        <div class="next-icon">🎮</div>
+        <h4>Mini browser game</h4>
+        <p>Snake, a quiz, or a word game. Claude can write game logic from a plain English description.</p>
+      </div>
+    </div>
+
+    <a href="https://claude.ai" target="_blank" class="btn btn-primary" style="display:inline-block;">Open Claude and start →</a>
+    <br>
+    <a href="vibedeeper.html" class="deeper-link">Ready to go deeper? Why Vibe Coding is disrupting software development →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="logo">Vibe<span>Code</span></div>
+  <p>A beginner tutorial · No coding experience required · Free tools only</p>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+    document.getElementById('pgbar').style.width = pct + '%';
+  });
+
+  // Tabs
+  function switchTab(btn, id) {
+    const body = btn.closest('.demo-body');
+    body.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    body.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tp-' + id).classList.add('active');
+  }
+
+  // Checklist with localStorage
+  const KEY = 'vc-tutorial-progress';
+  function loadProgress() {
+    try {
+      const s = JSON.parse(localStorage.getItem(KEY) || '{}');
+      document.querySelectorAll('.ci[data-id]').forEach(el => {
+        if (s[el.dataset.id]) el.classList.add('done');
+      });
+    } catch(e) {}
+    updateBar();
+  }
+  function saveProgress() {
+    try {
+      const s = {};
+      document.querySelectorAll('.ci[data-id]').forEach(el => { s[el.dataset.id] = el.classList.contains('done'); });
+      localStorage.setItem(KEY, JSON.stringify(s));
+    } catch(e) {}
+  }
+  function tick(el) { el.classList.toggle('done'); saveProgress(); updateBar(); }
+  function resetProgress() {
+    document.querySelectorAll('.ci[data-id]').forEach(el => el.classList.remove('done'));
+    try { localStorage.removeItem(KEY); } catch(e) {}
+    updateBar();
+  }
+  function updateBar() {
+    const items = document.querySelectorAll('.ci[data-id]');
+    const done = document.querySelectorAll('.ci[data-id].done').length;
+    const total = items.length;
+    document.getElementById('pb').style.width = (done / total * 100) + '%';
+    document.getElementById('pb-label').textContent = done === total ? '🎉 All done!' : done + ' of ' + total + ' skills';
+  }
+  loadProgress();
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
